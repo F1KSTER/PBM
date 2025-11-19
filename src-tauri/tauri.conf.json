@@ -28,13 +28,15 @@
     }
   },
 
-  "updater": {
-    "active": true,
-    "endpoints": [
-      "https://github.com/F1KSTER/PickemsMajorRaiz/releases/latest/download/latest.json"
-    ],
-    "dialog": true,
-    "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEFDNDI2MjgyQjMyNjlCQkQKUldTOW15YXpnbUpDck5xeGxlMS94cDBXVzhpTzBENWpLMFU0aXZoK3N1MitvSGw3Z1ZXdTJpb0MK"
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://github.com/F1KSTER/PBM/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEFDNDI2MjgyQjMyNjlCQkQKUldTOW15YXpnbUpDck5xeGxlMS94cDBXVzhpTzBENWpLMFU0aXZoK3N1MitvSGw3Z1ZXdTJpb0MK",
+      "dialog": true,
+      "active": true
+    }
   },
 
   "bundle": {
