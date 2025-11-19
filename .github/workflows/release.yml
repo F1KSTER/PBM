@@ -46,7 +46,7 @@ jobs:
         # Если npm ci выдаст ошибку, поменяй обратно на: npm install
 
       - name: Build and Upload
-        uses: tauri-apps/tauri-action@v2
+        uses: tauri-apps/tauri-action@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
