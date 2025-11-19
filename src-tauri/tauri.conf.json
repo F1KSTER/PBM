@@ -3,12 +3,14 @@
   "productName": "pickem-vite",
   "version": "0.1.0",
   "identifier": "com.viles.pickem",
+
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
+
   "app": {
     "windows": [
       {
@@ -25,6 +27,16 @@
       "csp": null
     }
   },
+
+  "updater": {
+    "active": true,
+    "endpoints": [
+      "https://github.com/F1KSTER/PickemsMajorRaiz/releases/latest/"
+    ],
+    "dialog": true,
+    "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEFDNDI2MjgyQjMyNjlCQkQKUldTOW15YXpnbUpDck5xeGxlMS94cDBXVzhpTzBENWpLMFU0aXZoK3N1MitvSGw3Z1ZXdTJpb0MK"
+  },
+
   "bundle": {
     "active": true,
     "targets": "all",
