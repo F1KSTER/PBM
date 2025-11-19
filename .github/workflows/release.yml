@@ -11,9 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest] # Для начала оставь только Windows, чтобы не тратить время на ошибки Linux/Mac
-        # Если нужны все, раскомментируй строку ниже и удали строку выше:
-        # platform: [macos-latest, ubuntu-22.04, windows-latest]
+        platform: [windows-latest] 
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -22,7 +20,6 @@ jobs:
 
       - name: Install dependencies (Ubuntu only)
         if: matrix.platform == 'ubuntu-22.04'
-        # Устанавливаем библиотеки, нужные для сборки .deb/.AppImage
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
@@ -30,13 +27,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20 # Используем актуальную LTS версию
+          node-version: 20 
           cache: 'npm'
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
-          # Тебе может понадобиться target x86_64-pc-windows-msvc для Windows
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Rust cache
@@ -50,14 +46,14 @@ jobs:
         # Если npm ci выдаст ошибку, поменяй обратно на: npm install
 
       - name: Build and Upload
-        uses: tauri-apps/tauri-action@v0
+        uses: tauri-apps/tauri-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: 'PickEm v__VERSION__' # Название релиза
+          releaseName: 'PickEm v__VERSION__' 
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
