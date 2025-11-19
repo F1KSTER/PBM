@@ -1,0 +1,51 @@
+name: Release
+on:
+  push:
+    tags:
+      - 'v*' # Срабатывает при пуше тега, например v1.0.1
+
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write # Разрешение на запись для создания релизов
+    strategy:
+      fail-fast: false
+      matrix:
+        # Платформы, под которые собирается приложение
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+    
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Убедитесь, что это подходящая для вас версия Node.js
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      # Установка зависимостей для Linux (Ubuntu)
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install frontend dependencies
+        run: npm install # Или yarn install / pnpm install
+
+      - name: Build and Upload Release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        with:
+          # Версия берется из тега, например v1.0.0
+          tagName: ${{ github.ref_name }} 
+          releaseName: 'Pickem Editor v__VERSION__' 
+          releaseBody: 'Новый релиз приложения Pickem Editor. Скачайте соответствующий установщик.'
+          releaseDraft: false # Сразу публикует релиз
+          prerelease: false
