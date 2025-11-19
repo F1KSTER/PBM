@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Tauri Updater Keys (Добавить в конец файла)
+pickem.key
+pickem.key.pub
